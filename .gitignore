@@ -1,0 +1,91 @@
+## Compilação do .NET
+bin/
+obj/
+out/
+[Ll]og/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Arquivos de build e publicação
+*.publish/
+*.dbmdl
+*.pdb
+*.cache
+*.mdb
+*.ilk
+*.log
+*.vspscc
+*.vssscc
+*.ncb
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+
+## Diretórios e arquivos do Visual Studio
+.vs/
+.vscode/
+*.code-workspace
+
+## Configurações locais
+*.local.json
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+## Pacotes
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Testes
+TestResults/
+*.TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.testsettings
+*.vsmdi
+
+## Ferramentas de build
+/.sonarqube/
+/.idea/
+/ReSharper*/
+*.DotSettings.user
+
+## Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swn
+*.swo
+*.orig
+
+## Arquivos de sistema
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+## Docker
+docker-compose.override.yml
+.env
+
+## Outros
+*.sqlite
+*.sqlite3
+*.db
+*.log
+
+# Ignore arquivos gerados por FastEndpoints (se houver)
+FastEndpoints.Generated/
+
+# Ignore arquivos de publish do Visual Studio
+publish/
