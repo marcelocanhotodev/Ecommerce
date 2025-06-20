@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Application.Domain;
 using Ecommerce.Application.Repositories.Interfaces;
-using Ecommerce.Application.UseCases.Interfaces;
+using Ecommerce.Application.UseCases.Interfaces.Product;
 using Ecommerce.Application.UseCases.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Application.UseCases
+namespace Ecommerce.Application.UseCases.Product
 {
     public class CreateProductUseCase : ICreateProductUseCase
     {
@@ -21,7 +21,7 @@ namespace Ecommerce.Application.UseCases
 
         public async Task<ProductCreateResponse> ExecuteAsync(ProductCreateRequest request, CancellationToken cancellationToken)
         {
-            var product = new Product
+            var product = new Domain.Product
             {
                 ean = request.Ean,
                 brandid = request.BrandId,
@@ -29,7 +29,7 @@ namespace Ecommerce.Application.UseCases
                 description = request.Description
             };
 
-            var productResponse = await _productRepository.SaveProduct(product);
+            var productResponse = await _productRepository.AddAsync(product);
 
             return new ProductCreateResponse
             {

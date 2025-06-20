@@ -1,8 +1,8 @@
 ﻿using Ecommerce.Application.Repositories.Interfaces;
-using Ecommerce.Application.UseCases.Interfaces;
+using Ecommerce.Application.UseCases.Interfaces.Product;
 using Ecommerce.Application.UseCases.Models;
 
-namespace Ecommerce.Application.UseCases
+namespace Ecommerce.Application.UseCases.Product
 {
     public class GetAllProductsUseCase : IGetAllProductsUseCase
     {
@@ -14,9 +14,9 @@ namespace Ecommerce.Application.UseCases
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
         }
 
-        public async Task<ProductGetAllResponse> ExecuteAsync(ProductGetAllRequest request, CancellationToken cancellationToken)
+        public async Task<ProductGetAllResponse> ExecuteAsync(CancellationToken cancellationToken)
         {
-            var products = await _productRepository.GetAllProducts();
+            var products = await _productRepository.GetAllAsync();
             var response = new ProductGetAllResponse
             {
                 Products = products.Select(p => new ProductCreateResponse

@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Api._Endpoints_.Product;
 using Ecommerce.Application.Repositories.Interfaces;
-using Ecommerce.Application.UseCases.Interfaces;
+using Ecommerce.Application.UseCases.Interfaces.Product;
 using Ecommerce.Application.UseCases.Models;
 using FastEndpoints;
 

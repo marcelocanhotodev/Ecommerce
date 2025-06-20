@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace Ecommerce.Application.UseCases.Models
+﻿namespace Ecommerce.Application.UseCases.Models
 {
     public class ProductCreateRequest
     {
