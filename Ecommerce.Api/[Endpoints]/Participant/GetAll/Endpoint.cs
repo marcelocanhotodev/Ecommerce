@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Api._Endpoints_.Participant.GetAll
 {
-    public class Endpoint : EndpointWithoutRequest<ParticipantGetAllResponse>
+    public class Endpoint : Endpoint<ParticipantGetAllRequest, ParticipantGetAllResponse>
     {
         private readonly IParticipantGetAllUseCase _getAllParticipantsUseCase = default!;
 
@@ -31,9 +31,9 @@ namespace Ecommerce.Api._Endpoints_.Participant.GetAll
             });
         }
 
-        public override async Task HandleAsync(CancellationToken ct)
+        public override async Task HandleAsync(ParticipantGetAllRequest req, CancellationToken ct)
         {
-            var response = await _getAllParticipantsUseCase.ExecuteAsync(ct);
+            var response = await _getAllParticipantsUseCase.ExecuteAsync(req,ct);
             await SendAsync(response);
         }
     }

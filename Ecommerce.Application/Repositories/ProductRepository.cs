@@ -1,4 +1,5 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Ecommerce.Application.Domain;
 using Ecommerce.Application.Repositories.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -48,6 +49,20 @@ namespace Ecommerce.Application.Repositories
             }
         }
 
+        public async Task<IEnumerable<Product>> GetAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        {
+            var sql = @"SELECT * FROM products
+                        ORDER BY id
+                        OFFSET @Offset LIMIT @PageSize";
+            var parameters = new
+            {
+                Offset = (pageNumber - 1) * pageSize,
+                PageSize = pageSize
+            };
+            await using var conn = new NpgsqlConnection(_connectionString);
+            return await conn.QueryAsync<Product>(sql, parameters);
+        }
+
         public async Task<Product> AddAsync(Product product, CancellationToken cancellationToken = default)
         {
             try
@@ -91,6 +106,13 @@ namespace Ecommerce.Application.Repositories
                 _logger.LogError(ex, "Erro ao deletar produto.");
                 throw;
             }
+        }
+
+        public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+        {
+            var sql = "SELECT COUNT(*) FROM products";
+            await using var conn = new NpgsqlConnection(_connectionString);
+            return await conn.ExecuteScalarAsync<int>(sql);
         }
     }
 }

@@ -6,7 +6,9 @@ using Ecommerce.Application.UseCases.Interfaces.Product;
 using Ecommerce.Application.UseCases.Order;
 using Ecommerce.Application.UseCases.Participant;
 using Ecommerce.Application.UseCases.Product;
+using Ecommerce.Application.UseCases.Validators;
 using Ecommerce.Infrastructure.Repositories;
+using FluentValidation;
 
 namespace Ecommerce.Api.Infrastructure
 {
@@ -19,7 +21,7 @@ namespace Ecommerce.Api.Infrastructure
             services.AddScoped<IParticipantAddUseCase, ParticipantAddUseCase>();
             services.AddScoped<IParticipantGetAllUseCase, ParticipantGetAllUseCase>();
             services.AddScoped<IOrderAddUseCase, OrderAddUseCase>();
-
+            services.AddValidatorsFromAssemblyContaining<ProductValidator>();
             return services;
         }
     }

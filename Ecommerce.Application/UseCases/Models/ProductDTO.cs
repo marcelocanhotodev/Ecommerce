@@ -1,4 +1,6 @@
-﻿namespace Ecommerce.Application.UseCases.Models
+﻿using System.ComponentModel;
+
+namespace Ecommerce.Application.UseCases.Models
 {
     public class ProductCreateRequest
     {
@@ -21,12 +23,16 @@
 
     public class ProductGetAllRequest
     {
-        public int Id { get; set; }
+        public int PageSize { get; set; }
+        public int Page { get; set; }
     }
 
     public class ProductGetAllResponse
     {
         public List<ProductCreateResponse> Products { get; set; } = new List<ProductCreateResponse>();
+        public int PageSize { get; set; }
+        public int Page { get; set; }
+        public int Total { get; set; }
     }
 }
 

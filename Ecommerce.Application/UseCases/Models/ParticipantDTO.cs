@@ -26,6 +26,16 @@ namespace Ecommerce.Application.UseCases.Models
         public class ParticipantGetAllResponse
         {
             public List<Domain.Participant> Participants { get; set; } = new List<Domain.Participant>();
+
+            public int PageSize { get; set; }
+            public int Page { get; set; }
+            public int Total { get; set; }
+        }
+
+        public class ParticipantGetAllRequest
+        {
+            public int PageSize { get; set; }
+            public int Page { get; set; }
         }
     }
 }

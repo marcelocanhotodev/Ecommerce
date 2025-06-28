@@ -1,4 +1,5 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Ecommerce.Application.Domain;
 using Ecommerce.Application.Repositories.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -31,19 +32,27 @@ namespace Ecommerce.Infrastructure.Repositories
             }
         }
 
-        public async Task<IEnumerable<Participant>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Participant>> GetAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
-            try
+            var sql = @"SELECT * FROM participants
+                        ORDER BY id
+                        OFFSET @Offset LIMIT @PageSize";
+            var parameters = new
             {
-                await using var conn = new NpgsqlConnection(_connectionString);
-                return await conn.GetAllAsync<Participant>();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao buscar todos os participantes.");
-                throw;
-            }
+                Offset = (pageNumber - 1) * pageSize,
+                PageSize = pageSize
+            };
+            await using var conn = new NpgsqlConnection(_connectionString);
+            return await conn.QueryAsync<Participant>(sql, parameters);
         }
+
+        public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+        {
+            var sql = "SELECT COUNT(*) FROM participants";
+            await using var conn = new NpgsqlConnection(_connectionString);
+            return await conn.ExecuteScalarAsync<int>(sql);
+        }
+
 
         public async Task<Participant> AddAsync(Participant participant, CancellationToken cancellationToken = default)
         {

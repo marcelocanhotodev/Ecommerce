@@ -3,6 +3,8 @@ using Ecommerce.Application.Repositories.Interfaces;
 using Ecommerce.Application.UseCases.Interfaces.Product;
 using Ecommerce.Application.UseCases.Models;
 using FastEndpoints;
+using FluentValidation;
+using System.Net;
 
 namespace Ecommerce.Api._Endpoints_.Post.Product
 {
@@ -29,8 +31,19 @@ namespace Ecommerce.Api._Endpoints_.Post.Product
 
         public override async Task HandleAsync(ProductCreateRequest request, CancellationToken cancellationToken)
         {
-            var response = await _createProductUseCase.ExecuteAsync(request, cancellationToken);
-            await SendAsync(response);
+            try
+            {
+                var response = await _createProductUseCase.ExecuteAsync(request, cancellationToken);
+                await SendAsync(response);
+            }
+            catch (ValidationException ex)
+            {
+                foreach (var error in ex.Errors)
+                {
+                    AddError(error.ErrorMessage);
+                }
+                await SendErrorsAsync(400, cancellationToken);
+            }
         }
     }
 }

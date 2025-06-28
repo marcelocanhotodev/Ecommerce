@@ -5,7 +5,7 @@ using FastEndpoints;
 
 namespace Ecommerce.Api._Endpoints_.Product.GetAll
 {
-    public class Endpoint : EndpointWithoutRequest<ProductGetAllResponse>
+    public class Endpoint : Endpoint<ProductGetAllRequest, ProductGetAllResponse>
     {
         private readonly IGetAllProductsUseCase _getAllProductsUseCase;
         public Endpoint(IProductRepository productRepository, IGetAllProductsUseCase getAllProductsUseCase)
@@ -23,9 +23,9 @@ namespace Ecommerce.Api._Endpoints_.Product.GetAll
                 s.Response<ProductGetAllResponse>(200);
             });
         }
-        public override async Task HandleAsync(CancellationToken cancellationToken)
+        public override async Task HandleAsync(ProductGetAllRequest request, CancellationToken cancellationToken)
         {
-            var response = await _getAllProductsUseCase.ExecuteAsync(cancellationToken);
+            var response = await _getAllProductsUseCase.ExecuteAsync(request,cancellationToken);
             await SendAsync(response);
         }
     }
